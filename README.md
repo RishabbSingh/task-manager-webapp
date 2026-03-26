@@ -1,5 +1,4 @@
 # 🚀 TaskFlow — Production-Grade Task Management App
-# Task Manager — DevOps Pipeline
 
 A production-ready full-stack Task Manager application demonstrating a complete DevOps pipeline from code to deployment. Built with React and Node.js, containerized with Docker, automatically deployed via GitHub Actions, provisioned on AWS using modular Terraform, and monitored with Prometheus and Grafana.
 
@@ -9,7 +8,7 @@ A production-ready full-stack Task Manager application demonstrating a complete 
 
 | Service | URL | Credentials |
 |---------|-----|-------------|
-| Application | http://3.85.229.230 | — |
+| Application | http://3.85.229.230 | create a new one. |
 | Grafana | http://3.85.229.230:3000 | admin / admin123 |
 | Prometheus | http://3.85.229.230:9090 | — |
 | API Health | http://3.85.229.230:5000/api/health | — |
