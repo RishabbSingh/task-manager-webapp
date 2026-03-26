@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm install && chmod -R 755 node_modules/.bin
 
 COPY . .
-RUN npm run build
+RUN node node_modules/vite/bin/vite.js build
 
 # Stage 2 — Serve with Nginx
 FROM nginx:alpine
