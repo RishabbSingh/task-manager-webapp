@@ -9,7 +9,6 @@ jobs:
 deploy:
 runs-on: ubuntu-latest
 
-```
 steps:
   - name: Deploy to EC2 via SSH
     uses: appleboy/ssh-action@v1.0.3
@@ -22,4 +21,4 @@ steps:
         git pull origin main
         docker-compose down
         docker-compose up -d --build
-```
+
