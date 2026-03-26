@@ -4,7 +4,7 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm install && chmod -R 755 node_modules/.bin
 
 COPY . .
 RUN npm run build
