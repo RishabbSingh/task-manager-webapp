@@ -2,12 +2,9 @@ version: '3.8'
 
 services:
 
-  # ─── Backend: Node.js API ───────────────
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: taskflow_backend
+    image: rishabsingh12/taskflow-backend:latest
+    container_name: task_manager_backend
     restart: always
     ports:
       - "5000:5000"
@@ -19,22 +16,19 @@ services:
       - NODE_ENV=production
       - CLIENT_URL=http://${SERVER_IP}
     networks:
-      - taskflow_network
+      - app_network
 
-  # ─── Frontend: React + Nginx ────────────
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: taskflow_frontend
+    image: rishabsingh12/taskflow-frontend:latest
+    container_name: task_manager_frontend
     restart: always
     ports:
       - "80:80"
     depends_on:
       - backend
     networks:
-      - taskflow_network
+      - app_network
 
 networks:
-  taskflow_network:
+  app_network:
     driver: bridge

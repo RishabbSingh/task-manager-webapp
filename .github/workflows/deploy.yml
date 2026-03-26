@@ -17,8 +17,12 @@ steps:
       username: ${{ secrets.EC2_USER }}
       key: ${{ secrets.EC2_SSH_KEY }}
       script: |
-        cd ~/task-manager-webapp
+        cd /home/ubuntu/task-manager-webapp
         git pull origin main
+        docker pull rishabsingh12/taskflow-backend:latest
+        docker pull rishabsingh12/taskflow-frontend:latest
         docker-compose down
-        docker-compose up -d --build
+        docker-compose up -d
+        docker image prune -f
+        echo "✅ Done!"
 
