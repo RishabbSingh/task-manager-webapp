@@ -1,96 +1,109 @@
 # 🚀 TaskFlow — Production-Grade Task Management App
 
-A full-stack task management application built with React, Node.js, Express, and MongoDB.
+A production-ready full-stack Task Manager application demonstrating a complete DevOps pipeline from code to deployment. Built with React and Node.js, containerized with Docker, automatically deployed via GitHub Actions, provisioned on AWS using modular Terraform, and monitored with Prometheus and Grafana.
 
-## 📁 Project Structure
+---
+
+## Live URLs
+
+| Service | URL | Credentials |
+|---------|-----|-------------|
+| Application | http://3.85.229.230 | create a new one. |
+| Grafana | http://3.85.229.230:3000 | admin / admin123 |
+| Prometheus | http://3.85.229.230:9090 | — |
+| API Health | http://3.85.229.230:5000/api/health | — |
+
+---
+
+## Pipeline Overview
 
 ```
-taskflow/
-├── backend/          # Node.js + Express API
-│   ├── config/       # Database connection
-│   ├── controllers/  # Route logic
-│   ├── middleware/   # Auth, error, validation
-│   ├── models/       # Mongoose schemas
-│   ├── routes/       # API routes
-│   └── server.js     # Entry point
-└── frontend/         # React + Vite + Tailwind
-    └── src/
-        ├── components/  # Reusable UI components
-        ├── context/     # React context (Auth)
-        ├── pages/       # Route pages
-        └── utils/       # Axios instance
+git push → Test → Build Docker → Push to Hub → Deploy to EC2 → Monitor
 ```
 
-## ⚙️ Setup Instructions
+---
 
-### Prerequisites
-- Node.js 18+
-- MongoDB (local or Atlas)
+## Stack
 
-### Backend Setup
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React + Nginx (Docker) |
+| Backend | Node.js + Express (Docker) |
+| Database | MongoDB Atlas |
+| CI/CD | GitHub Actions |
+| IaC | Terraform (modular) |
+| Monitoring | Prometheus + Grafana |
+| Cloud | AWS EC2 |
+
+---
+
+## 1. CI/CD — GitHub Actions
+
+Three jobs run on every push to `main`:
+
+```
+Test  →  Build & Push to Docker Hub  →  SSH Deploy to EC2
+```
+
+File: `.github/workflows/deploy.yml`
+
+GitHub Secrets required:
+```
+DOCKER_USERNAME / DOCKER_PASSWORD → Docker Hub
+SERVER_IP / SERVER_SSH_KEY        → EC2 access
+```
+
+---
+
+## 2. Docker
+
 ```bash
-cd backend
-npm install
-cp .env.example .env
-# Edit .env with your MongoDB URI and a strong JWT_SECRET
-npm run dev
-# API running at http://localhost:5000
+docker-compose up -d --build
 ```
 
-### Frontend Setup
+- Backend: `node:18-alpine` — production deps only
+- Frontend: Multi-stage build → served via Nginx
+- Nginx proxies `/api` requests to backend
+
+---
+
+## 3. Terraform — Modular IaC
+
+```
+modules/
+├── vpc/             → VPC, Subnet, IGW, Route Table
+├── security_group/  → Reusable firewall rules
+├── compute/         → EC2 t2.micro
+└── storage/         → Encrypted S3 bucket
+```
+
 ```bash
-cd frontend
-npm install
-npm run dev
-# App running at http://localhost:5173
+cd terraform
+cp terraform.tfvars.example terraform.tfvars
+terraform init && terraform plan && terraform apply
 ```
 
-## 🔑 Environment Variables
+---
 
-### Backend `.env`
+## 4. Monitoring
+
+Three targets monitored: Backend app, Node Exporter, Prometheus itself.
+
+Metrics collected: HTTP requests, CPU, RAM, Disk, event loop lag.
+
+---
+
+## Quick Start
+
+```bash
+git clone https://github.com/RishabbSingh/task-manager-webapp.git
+cd task-manager-webapp
+cp backend/.env.example backend/.env  # add MongoDB URI
+docker-compose up -d --build
 ```
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/taskflow
-JWT_SECRET=your_super_secret_jwt_key
-JWT_EXPIRE=7d
-NODE_ENV=development
-CLIENT_URL=http://localhost:5173
-```
 
-## 📡 API Reference
+---
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /api/auth/register | Register user |
-| POST | /api/auth/login | Login user |
-| GET | /api/auth/me | Get current user |
-| GET | /api/tasks | Get tasks (filter/search/paginate) |
-| POST | /api/tasks | Create task |
-| GET | /api/tasks/:id | Get single task |
-| PUT | /api/tasks/:id | Update task |
-| DELETE | /api/tasks/:id | Delete task |
-| PATCH | /api/tasks/bulk-status | Bulk update statuses |
+**Author:** Rishabh Singh — https://github.com/RishabbSingh
 
-### Query Parameters for GET /api/tasks
-- `status` — Pending | In Progress | Completed
-- `priority` — Low | Medium | High
-- `search` — search in title/description
-- `page` — page number (default: 1)
-- `limit` — results per page (default: 10, max: 50)
-- `sortBy` — field to sort by (default: createdAt)
-- `sortOrder` — asc | desc
-
-## ✅ Features
-- JWT Authentication (register/login)
-- Full CRUD for tasks
-- Filters: status, priority, search
-- Pagination
-- List & Kanban views
-- Drag-and-drop in Kanban
-- Dark mode toggle
-- Toast notifications
-- Loading skeletons
-- Responsive design
-- Role-based access (user/admin)
-- Input validation
 - Error handling middleware
