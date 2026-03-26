@@ -1,0 +1,13 @@
+### `backend/.dockerignore`
+```
+node_modules
+.env
+*.log
+npm-debug.log
+```
+
+### `frontend/.dockerignore`
+```
+node_modules
+dist
+*.log
