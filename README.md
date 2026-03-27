@@ -105,5 +105,3 @@ docker-compose up -d --build
 ---
 
 **Author:** Rishabh Singh — https://github.com/RishabbSingh
-
-- Error handling middleware
