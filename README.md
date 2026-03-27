@@ -6,12 +6,12 @@ A production-ready full-stack Task Manager application demonstrating a complete 
 
 ## Live URLs
 
-| Service | URL | Credentials |
-|---------|-----|-------------|
-| Application | http://3.85.229.230 | create a new one. |
-| Grafana | http://3.85.229.230:3000 | admin / admin123 | 1. Go to bookmark 2. Under bookmark select dashboard 3. Click Nodejs Exporter
-| Prometheus | http://3.85.229.230:9090 | — |
-| API Health | http://3.85.229.230:5000/api/health | — |
+| Service | URL | Credentials | Description |
+|---------|-----|-------------|-------------|
+| Application | http://3.85.229.230 | create a new one. |  -    |
+| Grafana | http://3.85.229.230:3000 | admin / admin123 | 1. Go to bookmark 2. Under bookmark select dashboard 3. Click Nodejs Exporter |
+| Prometheus | http://3.85.229.230:9090 | — | -|
+| API Health | http://3.85.229.230:5000/api/health | — | -|
 
 For Grafana Live - 1. Go to bookmark 2. Under bookmark select dashboard 3. Click Nodejs Exporter
 ---
