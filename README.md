@@ -13,7 +13,6 @@ A production-ready full-stack Task Manager application demonstrating a complete 
 | Prometheus | http://3.85.229.230:9090 | — | -|
 | API Health | http://3.85.229.230:5000/api/health | — | -|
 
-For Grafana Live - 1. Go to bookmark 2. Under bookmark select dashboard 3. Click Nodejs Exporter
 ---
 
 ## Pipeline Overview
